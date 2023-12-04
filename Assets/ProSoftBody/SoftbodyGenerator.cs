@@ -34,8 +34,8 @@ public class SoftbodyGenerator : MonoBehaviour
             var _tempObj = Instantiate(new GameObject());
             _tempObj.transform.parent = this.transform;
             _tempObj.AddComponent<SphereCollider>();
-            _tempObj.transform.position = vertecs;
-
+            _tempObj.transform.position = new Vector3(this.transform.position.x + vertecs.x, this.transform.position.y + vertecs.y, this.transform.position.z + vertecs.z);
+            phyisicedVertexes.Add(_tempObj);
         }
 
     }
