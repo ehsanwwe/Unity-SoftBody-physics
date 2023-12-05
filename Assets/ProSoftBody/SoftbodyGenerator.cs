@@ -31,7 +31,7 @@ public class SoftbodyGenerator : MonoBehaviour
 
         foreach (var vertecs in writableVertices)
         {
-            var _tempObj = Instantiate(new GameObject());
+            var _tempObj = new GameObject("Point "+writableVertices.IndexOf(vertecs));
             _tempObj.transform.parent = this.transform;
             _tempObj.AddComponent<SphereCollider>();
             _tempObj.transform.position = new Vector3(this.transform.position.x + vertecs.x, this.transform.position.y + vertecs.y, this.transform.position.z + vertecs.z);
