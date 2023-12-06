@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class SoftbodyGenerator : MonoBehaviour
 {
-    public MeshFilter originalMeshFilter;
+    private MeshFilter originalMeshFilter;
     private List<Vector3> writableVertices { get; set; }
     private List<Vector3> writableNormals { get; set; }
     private int[] writableTris { get; set; }
@@ -13,6 +13,8 @@ public class SoftbodyGenerator : MonoBehaviour
 
     private List<GameObject> phyisicedVertexes;
     private new Dictionary<int, int> vertexDictunery;
+    public bool runOptimizedVersion = true;
+    public float collissionSurfaceOffset = 0.1f;
     private void Awake()
     {
         writableVertices = new List<Vector3>();
@@ -62,7 +64,7 @@ public class SoftbodyGenerator : MonoBehaviour
             _tempObj.transform.parent = this.transform;
             _tempObj.transform.position = new Vector3(this.transform.position.x + vertecs.x, this.transform.position.y + vertecs.y, this.transform.position.z + vertecs.z);
             var sphereColider = _tempObj.AddComponent<SphereCollider>() as SphereCollider;
-            sphereColider.radius = 0.1f;
+            sphereColider.radius = collissionSurfaceOffset;
 
             _tempObj.AddComponent<Rigidbody>();
             phyisicedVertexes.Add(_tempObj);
@@ -88,6 +90,8 @@ public class SoftbodyGenerator : MonoBehaviour
             if (jointIndex.x == jointIndex.y)
                 continue;
             var joint3 =  phyisicedVertexes[jointIndex.x].AddComponent<SpringJoint>();
+            if (!runOptimizedVersion)
+                joint3.enableCollision = true;
             joint3.spring = 1000;
             joint3.damper = 7;
             joint3.connectedBody = phyisicedVertexes[jointIndex.y].GetComponent<Rigidbody>();
