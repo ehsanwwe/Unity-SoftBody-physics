@@ -1,5 +1,5 @@
 # Unity-SoftBody-physics
-Add softbody physics to unity Free
+Add softbody physics to unity
 
 <br>
 <img src="https://github.com/ehsanwwe/Unity-SoftBody-physics/blob/main/softbody.gif?raw=true" >
