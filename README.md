@@ -6,7 +6,7 @@ Add softbody physics to unity
 
 <br>
 <h2>how to use</h2>
-add SoftBodyGenerator script to your object
+Add <b>SoftBodyGenerator.cs</b> script to your object
 
 enjoy
 
