@@ -1,9 +1,7 @@
 <meta name="google-site-verification" content="-1jiJZ-TUx9L9zO3uSK3lp_G1AtSwhuGexR002ZBfGY" />
 <h1>Unity SoftBody physics</h1>
 Add softbody physics to unity
-
 <br>
-<img src="https://github.com/ehsanwwe/Unity-SoftBody-physics/blob/main/softbody.gif?raw=true"  height="300" alt="unity softbody">
 <img src="https://github.com/ehsanwwe/Unity-SoftBody-physics/blob/main/softbody2.gif?raw=true" height="300" alt="unity softbody">
 
 <br>
