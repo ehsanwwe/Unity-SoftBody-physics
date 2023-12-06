@@ -62,7 +62,11 @@ public class SoftbodyGenerator : MonoBehaviour
         {
             var _tempObj = new GameObject("Point "+ _optimizedVertex.IndexOf(vertecs));
             _tempObj.transform.parent = this.transform;
-            _tempObj.transform.position = new Vector3(this.transform.position.x + vertecs.x, this.transform.position.y + vertecs.y, this.transform.position.z + vertecs.z);
+            _tempObj.transform.position = new Vector3(
+                  transform.lossyScale.x * (transform.position.x + vertecs.x)
+                , transform.lossyScale.y * (transform.position.y + vertecs.y)
+                , transform.lossyScale.z * (transform.position.z + vertecs.z)
+            );
             var sphereColider = _tempObj.AddComponent<SphereCollider>() as SphereCollider;
             sphereColider.radius = collissionSurfaceOffset;
 
@@ -108,6 +112,7 @@ public class SoftbodyGenerator : MonoBehaviour
             
         }
         originalMeshFilter.mesh.vertices = tempVertexes;
+        originalMeshFilter.mesh.RecalculateBounds();
         
     }
 }
