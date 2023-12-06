@@ -97,21 +97,13 @@ public class SoftbodyGenerator : MonoBehaviour
     }
     public void Update()
     {
-        for(int i = 0; i < phyisicedVertexes.Count; i++)
+        var tempVertexes = new Vector3[originalMeshFilter.mesh.vertices.Length] ;
+        for(int i = 0; i < tempVertexes.Length; i++)
         {
-            for(int j=0;j< vertexDictunery.Count;j++)
-            {
-                if (vertexDictunery[j] == i)
-                {
-                    originalMeshFilter.mesh.vertices[vertexDictunery[j]] = phyisicedVertexes[i].transform.localPosition;                    
-                }
-                    
-            }
+            tempVertexes[i]  = phyisicedVertexes[vertexDictunery[i]].transform.localPosition;
             
         }
-        originalMeshFilter.mesh.RecalculateNormals();
-        originalMeshFilter.mesh.UploadMeshData(false);
-        originalMeshFilter.sharedMesh = originalMeshFilter.mesh;
+        originalMeshFilter.mesh.vertices = tempVertexes;
         
     }
 }
