@@ -61,6 +61,7 @@ public class SoftbodyGenerator : MonoBehaviour
         foreach (var vertecs in _optimizedVertex)
         {
             var _tempObj = new GameObject("Point "+ _optimizedVertex.IndexOf(vertecs));
+            _tempObj.hideFlags = HideFlags.HideInHierarchy;
             _tempObj.transform.parent = this.transform;
             _tempObj.transform.position = new Vector3(
                   transform.lossyScale.x * (transform.position.x + vertecs.x)
