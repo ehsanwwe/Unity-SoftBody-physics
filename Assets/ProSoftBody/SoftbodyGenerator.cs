@@ -26,6 +26,7 @@ public class SoftbodyGenerator : MonoBehaviour
     public float gravity = 7f;
     public bool debugMode = false;
     public float physicsRoughness = 0;
+    private GameObject centerOfMasObj = null;
     private void Awake()
     {
        
@@ -42,29 +43,40 @@ public class SoftbodyGenerator : MonoBehaviour
         originalMeshFilter.mesh.GetNormals(writableNormals);
         writableTris = originalMeshFilter.mesh.triangles;
 
-        new ConvexHullCalculator().GenerateHull(
-            writableVertices
-            , false
-            , ref writableVerticesConvaxed, ref writableTrisConvaxed, ref writableNormalsConvaxed
-            );
-        
+
+        var localToWorld = transform.localToWorldMatrix;
+        for (int i = 0; i < writableVertices.Count; ++i)
+        {
+            writableVertices[i] = localToWorld.MultiplyPoint3x4(writableVertices[i]);
+        }
+
+        if (runOptimizedVersion)
+        {
+            new ConvexHullCalculator().GenerateHull(
+                 writableVertices
+                 , false
+                 , ref writableVerticesConvaxed, ref writableTrisConvaxed, ref writableNormalsConvaxed
+                 );
+            writableVertices = writableVerticesConvaxed;
+            writableNormals = writableNormalsConvaxed;
+            writableTris = writableTrisConvaxed.ToArray();
+        }
+
         writableMesh = new Mesh();
-        writableMesh.SetVertices(writableVerticesConvaxed);
-        writableMesh.SetNormals(writableNormalsConvaxed);
-        writableMesh.triangles = writableTrisConvaxed.ToArray();
-        
+        writableMesh.SetVertices(writableVertices);
+        writableMesh.SetNormals(writableNormals);
+        writableMesh.triangles = writableTris;
         originalMeshFilter.mesh = writableMesh;
-        
         // remove duplicated vertex
         var _optimizedVertex = new List<Vector3>();
 
         // first column = original vertex index , last column = optimized vertex index 
         vertexDictunery = new Dictionary<int, int>();
-        for (int i = 0; i < writableVerticesConvaxed.Count; i++)
+        for (int i = 0; i < writableVertices.Count; i++)
         {   
             bool isVertexDuplicated = false;
             for (int j = 0; j < _optimizedVertex.Count; j++)
-                if (_optimizedVertex[j] == writableVerticesConvaxed[i])
+                if (_optimizedVertex[j] == writableVertices[i])
                 {
                     isVertexDuplicated = true;
                     vertexDictunery.Add(i, j);
@@ -72,12 +84,12 @@ public class SoftbodyGenerator : MonoBehaviour
                 }
             if (!isVertexDuplicated)
             {
-                _optimizedVertex.Add(writableVerticesConvaxed[i]);
+                _optimizedVertex.Add(writableVertices[i]);
                 vertexDictunery.Add(i, _optimizedVertex.Count - 1);
             }
         }
-        
 
+        
         // create balls at each of vertex also center of mass
         foreach (var vertecs in _optimizedVertex)
         {
@@ -90,11 +102,11 @@ public class SoftbodyGenerator : MonoBehaviour
                 _tempObj.hideFlags = HideFlags.HideAndDontSave;
 
             _tempObj.transform.parent = this.transform;
-            _tempObj.transform.position = new Vector3(
+            _tempObj.transform.position = vertecs; /*new Vector3(
                   transform.lossyScale.x * (transform.position.x + vertecs.x)
                 , transform.lossyScale.y * (transform.position.y + vertecs.y)
                 , transform.lossyScale.z * (transform.position.z + vertecs.z)
-            );
+            );*/
             var sphereColider = _tempObj.AddComponent<SphereCollider>() as SphereCollider;
             sphereColider.radius = collissionSurfaceOffset;
             
@@ -102,8 +114,9 @@ public class SoftbodyGenerator : MonoBehaviour
             var _tempRigidBody = _tempObj.AddComponent<Rigidbody>();
             _tempRigidBody.mass = mass / _optimizedVertex.Count;
             _tempRigidBody.drag = physicsRoughness;
+            //_tempRigidBody.useGravity = false;
 
-
+            _tempObj.AddComponent<DebugColorGameObject>().Color = Random.ColorHSV();            
             phyisicedVertexes.Add(_tempObj);
         }
 
@@ -120,20 +133,20 @@ public class SoftbodyGenerator : MonoBehaviour
             , tempCenter.y / _optimizedVertex.Count
             , tempCenter.z / _optimizedVertex.Count
         );
-        GameObject centerOfMasObj = null;
         // add center of mass vertex to OptimizedVertex list
         {
             var _tempObj = new GameObject("centerOfMass");
             if (!debugMode)
                 _tempObj.hideFlags = HideFlags.HideAndDontSave;
             _tempObj.transform.parent = this.transform;
-            _tempObj.transform.localPosition = centerOfMass;
+            _tempObj.transform.position = centerOfMass;
 
             var sphereColider = _tempObj.AddComponent<SphereCollider>() as SphereCollider;
             sphereColider.radius = collissionSurfaceOffset;
 
 
-            var _tempRigidBody = _tempObj.AddComponent<ArticulationBody>();
+            var _tempRigidBody = _tempObj.AddComponent<Rigidbody>();
+            //_tempRigidBody.useGravity = false;
             centerOfMasObj = _tempObj;            
         }
 
@@ -142,11 +155,11 @@ public class SoftbodyGenerator : MonoBehaviour
         
         List<Vector2Int> tempListOfSprings = new List<Vector2Int>();
         
-        for (int i=0;i<writableTrisConvaxed.Count;i+=3)
+        for (int i=0;i<writableTris.Length;i+=3)
         {
-            int index0 = vertexDictunery[writableTrisConvaxed[i]];
-            int index1 = vertexDictunery[writableTrisConvaxed[i+1]];
-            int index2 = vertexDictunery[writableTrisConvaxed[i+2]];
+            int index0 = vertexDictunery[writableTris[i]];
+            int index1 = vertexDictunery[writableTris[i+1]];
+            int index2 = vertexDictunery[writableTris[i+2]];
 
             tempListOfSprings.Add(new Vector2Int(index0, index1));
             tempListOfSprings.Add(new Vector2Int(index1, index2));
@@ -183,39 +196,69 @@ public class SoftbodyGenerator : MonoBehaviour
         foreach (var jointIndex in noDupesListOfSprings)
         {            
             var thisGameObject = phyisicedVertexes[jointIndex.x];
-            var thisBodyJoint = thisGameObject.AddComponent<SpringJoint>();
-            var destinationBody = centerOfMasObj.GetComponent<Rigidbody>();
+            var thisBodyJoint = thisGameObject.AddComponent<CharacterJoint>();
+            var destinationBody = phyisicedVertexes[jointIndex.y].GetComponent<Rigidbody>();
             float distanceBetween = Vector3.Distance(thisGameObject.transform.position, destinationBody.transform.position);
             
 
             // configure current spring joint
             thisBodyJoint.connectedBody = destinationBody;
-            thisBodyJoint.spring = softness;
-            thisBodyJoint.damper = damp;
-            thisBodyJoint.autoConfigureConnectedAnchor = false;
-            thisBodyJoint.connectedAnchor = Vector3.zero;
-            thisBodyJoint.anchor = Vector3.zero;
-            thisBodyJoint.minDistance = distanceBetween;
-            thisBodyJoint.maxDistance = distanceBetween;
+            SoftJointLimit jointlimitHihj = new SoftJointLimit();
+            jointlimitHihj.bounciness = 1.1f;
+            jointlimitHihj.contactDistance = 0.1f;
+            jointlimitHihj.limit = 0;
+
+            SoftJointLimit jointlimitLow = new SoftJointLimit();
+            jointlimitLow.bounciness = 1.1f;
+            jointlimitLow.contactDistance = 0.1f;
+            jointlimitLow.limit = 0;
+
+            thisBodyJoint.highTwistLimit = jointlimitHihj;
+            thisBodyJoint.lowTwistLimit = jointlimitLow;
+            thisBodyJoint.swing1Limit = jointlimitLow;
+            thisBodyJoint.swing2Limit = jointlimitHihj;
+            
+
+            //thisBodyJoint.
+
+            SoftJointLimitSpring springlimit = new SoftJointLimitSpring();
+            springlimit.damper = 0.001f;
+            springlimit.spring = 0.2f;
+
+            thisBodyJoint.swingLimitSpring = springlimit;
+            thisBodyJoint.twistLimitSpring = springlimit;
+
+           /* thisBodyJoint.enableProjection = true;
+            thisBodyJoint.projectionAngle = 45 ;
+            thisBodyJoint.projectionDistance = distanceBetween;
+            */
+
+
+            /* thisBodyJoint.spring = softness;
+             thisBodyJoint.damper = damp;
+             thisBodyJoint.autoConfigureConnectedAnchor = false;
+             thisBodyJoint.connectedAnchor = Vector3.zero;
+             thisBodyJoint.anchor = Vector3.zero;
+             thisBodyJoint.minDistance = distanceBetween;
+             thisBodyJoint.maxDistance = distanceBetween;*/
             if (!runOptimizedVersion)
                 thisBodyJoint.enableCollision = true;
            
             
         }
         // Decelare Center of mass variable
-        var centerOfMassPoint = phyisicedVertexes[phyisicedVertexes.Count - 1];
-        Debug.Log(centerOfMassPoint.name);
         foreach (var jointIndex in noDupesListOfSprings)
         {
+            var destinationBodyJoint = phyisicedVertexes[jointIndex.x].AddComponent<SpringJoint>();
             
-            var thisGameObject = centerOfMassPoint;
-            var destinationBodyJoint = thisGameObject.AddComponent<SpringJoint>();
-            var destinationBody = phyisicedVertexes[jointIndex.x].GetComponent<ArticulationBody>();
-            float distanceToCenterOfmass = Vector3.Distance(thisGameObject.transform.localPosition, destinationBody.transform.localPosition);
-
-            destinationBodyJoint.connectedArticulationBody = destinationBody;
-            destinationBodyJoint.spring = softness ;
-            destinationBodyJoint.damper = damp;
+            float distanceToCenterOfmass = Vector3.Distance(
+                  centerOfMasObj.transform.localPosition
+                , destinationBodyJoint.transform.localPosition
+            );
+            
+            destinationBodyJoint.connectedBody = centerOfMasObj.GetComponent<Rigidbody>();
+            /*destinationBodyJoint.spring = softness; //*5;
+            destinationBodyJoint.damper = damp; //* 5;
             destinationBodyJoint.autoConfigureConnectedAnchor = false;
             destinationBodyJoint.connectedAnchor = Vector3.zero;
             destinationBodyJoint.anchor = Vector3.zero;
@@ -223,28 +266,34 @@ public class SoftbodyGenerator : MonoBehaviour
             destinationBodyJoint.maxDistance = distanceToCenterOfmass;
             if (!runOptimizedVersion)
                 destinationBodyJoint.enableCollision = true;
+                */
         }
-        */
+
     }
     List<Vector2Int> noDupesListOfSprings = new List<Vector2Int>();
     public void Update()
     {
-       /* if (debugMode)
+       if (debugMode)
         {
             foreach (var jointIndex in noDupesListOfSprings)
             {
-                if (jointIndex.x == jointIndex.y)
-                    continue;
                 Debug.DrawLine(
                     phyisicedVertexes[jointIndex.x].transform.position
                     , phyisicedVertexes[jointIndex.y].transform.position
-                    ,Random.ColorHSV()
+                    , phyisicedVertexes[jointIndex.x].GetComponent<DebugColorGameObject>().Color
+                );
 
+            }
+            foreach (var jointIndex in noDupesListOfSprings)
+            {
+                Debug.DrawLine(
+                      phyisicedVertexes[jointIndex.x].transform.position
+                    , centerOfMasObj.transform.position
+                    , Color.red
                 );
 
             }
         }
-
         var tempVertexes = new Vector3[originalMeshFilter.mesh.vertices.Length];
         for (int i = 0; i < tempVertexes.Length; i++)
         {
@@ -255,6 +304,12 @@ public class SoftbodyGenerator : MonoBehaviour
         originalMeshFilter.mesh.RecalculateBounds();
         originalMeshFilter.mesh.RecalculateTangents();
         originalMeshFilter.mesh.RecalculateNormals();
-        */
     }
+}
+
+public class DebugColorGameObject : MonoBehaviour
+{
+    // Logically you could make use of an enum for the 
+    // color but I picked the string to write this example faster.
+    public Color Color { get; set; }
 }
