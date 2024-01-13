@@ -49,7 +49,7 @@ public class SoftbodyGenerator : MonoBehaviour
         {
             writableVertices[i] = localToWorld.MultiplyPoint3x4(writableVertices[i]);
         }
-
+        
         if (runOptimizedVersion)
         {
             new ConvexHullCalculator().GenerateHull(
@@ -115,8 +115,11 @@ public class SoftbodyGenerator : MonoBehaviour
             _tempRigidBody.mass = mass / _optimizedVertex.Count;
             _tempRigidBody.drag = physicsRoughness;
             //_tempRigidBody.useGravity = false;
-
-            _tempObj.AddComponent<DebugColorGameObject>().Color = Random.ColorHSV();            
+            
+            if(debugMode)
+                _tempObj.AddComponent<DebugColorGameObject>().Color = Random.ColorHSV(); 
+            
+            
             phyisicedVertexes.Add(_tempObj);
         }
 
@@ -144,7 +147,6 @@ public class SoftbodyGenerator : MonoBehaviour
             var sphereColider = _tempObj.AddComponent<SphereCollider>() as SphereCollider;
             sphereColider.radius = collissionSurfaceOffset;
 
-
             var _tempRigidBody = _tempObj.AddComponent<Rigidbody>();
             //_tempRigidBody.useGravity = false;
             centerOfMasObj = _tempObj;            
@@ -162,14 +164,12 @@ public class SoftbodyGenerator : MonoBehaviour
             int index2 = vertexDictunery[writableTris[i+2]];
 
             tempListOfSprings.Add(new Vector2Int(index0, index1));
-            tempListOfSprings.Add(new Vector2Int(index1, index2));
+            //tempListOfSprings.Add(new Vector2Int(index1, index2));
             tempListOfSprings.Add(new Vector2Int(index2, index0));
-
-
         }
 
+
         // distinct normal Duplicates with check revers
-        Debug.Log(tempListOfSprings.Count);
         for (int i = 0; i < tempListOfSprings.Count; i++)
         {
             bool isDuplicated = false;
@@ -192,6 +192,7 @@ public class SoftbodyGenerator : MonoBehaviour
             if (isDuplicated == false)
                 noDupesListOfSprings.Add(tempListOfSprings[i]);
         }
+
         // making Springs bodies
         foreach (var jointIndex in noDupesListOfSprings)
         {            
@@ -205,13 +206,14 @@ public class SoftbodyGenerator : MonoBehaviour
             thisBodyJoint.connectedBody = destinationBody;
             SoftJointLimit jointlimitHihj = new SoftJointLimit();
             jointlimitHihj.bounciness = 1.1f;
-            jointlimitHihj.contactDistance = 0.1f;
-            jointlimitHihj.limit = 0;
+            jointlimitHihj.contactDistance = distanceBetween;
+            jointlimitHihj.limit = 10;
 
             SoftJointLimit jointlimitLow = new SoftJointLimit();
             jointlimitLow.bounciness = 1.1f;
-            jointlimitLow.contactDistance = 0.1f;
-            jointlimitLow.limit = 0;
+            jointlimitLow.contactDistance = distanceBetween;
+            jointlimitLow.limit = -10;
+            
 
             thisBodyJoint.highTwistLimit = jointlimitHihj;
             thisBodyJoint.lowTwistLimit = jointlimitLow;
@@ -222,8 +224,8 @@ public class SoftbodyGenerator : MonoBehaviour
             //thisBodyJoint.
 
             SoftJointLimitSpring springlimit = new SoftJointLimitSpring();
-            springlimit.damper = 0.001f;
-            springlimit.spring = 0.2f;
+            springlimit.damper = 0.3f;
+            springlimit.spring = 1f;
 
             thisBodyJoint.swingLimitSpring = springlimit;
             thisBodyJoint.twistLimitSpring = springlimit;
@@ -247,9 +249,9 @@ public class SoftbodyGenerator : MonoBehaviour
             
         }
         // Decelare Center of mass variable
-        foreach (var jointIndex in noDupesListOfSprings)
+        foreach (var jointIndex in phyisicedVertexes)
         {
-            var destinationBodyJoint = phyisicedVertexes[jointIndex.x].AddComponent<SpringJoint>();
+            var destinationBodyJoint = jointIndex.AddComponent<FixedJoint>();
             
             float distanceToCenterOfmass = Vector3.Distance(
                   centerOfMasObj.transform.localPosition
@@ -263,10 +265,12 @@ public class SoftbodyGenerator : MonoBehaviour
             destinationBodyJoint.connectedAnchor = Vector3.zero;
             destinationBodyJoint.anchor = Vector3.zero;
             destinationBodyJoint.minDistance = distanceToCenterOfmass;
-            destinationBodyJoint.maxDistance = distanceToCenterOfmass;
+            destinationBodyJoint.maxDistance = distanceToCenterOfmass;*/
+            destinationBodyJoint.massScale = 0.001f;
+            destinationBodyJoint.connectedMassScale = 0.001f;
             if (!runOptimizedVersion)
                 destinationBodyJoint.enableCollision = true;
-                */
+                
         }
 
     }
@@ -305,11 +309,10 @@ public class SoftbodyGenerator : MonoBehaviour
         originalMeshFilter.mesh.RecalculateTangents();
         originalMeshFilter.mesh.RecalculateNormals();
     }
+
 }
 
 public class DebugColorGameObject : MonoBehaviour
 {
-    // Logically you could make use of an enum for the 
-    // color but I picked the string to write this example faster.
     public Color Color { get; set; }
 }
