@@ -5,7 +5,6 @@ using UnityEngine;
 using GK;
 public class SoftbodyGenerator : MonoBehaviour
 {
-    public LayerMask layer;
     private MeshFilter originalMeshFilter;
     private List<Vector3> writableVertices { get; set; }
     private List<Vector3> writableVerticesConvaxed;//{ get; set; }
@@ -20,10 +19,9 @@ public class SoftbodyGenerator : MonoBehaviour
     /** public variable to controll softbody **/
     public bool runOptimizedVersion = true;
     public float collissionSurfaceOffset = 0.1f;
-    public float softness = 1000f;
-    public float damp = 100f;
+    public float softness = 1f;
+    public float damp = .2f;
     public float mass = 1f;
-    public float gravity = 7f;
     public bool debugMode = false;
     public float physicsRoughness = 0;
     private GameObject centerOfMasObj = null;
@@ -95,18 +93,13 @@ public class SoftbodyGenerator : MonoBehaviour
         {
             var _tempObj = new GameObject("Point "+ _optimizedVertex.IndexOf(vertecs));
 
-            // add laye to rigided body physics can't affect together
-            _tempObj.layer = 6;
 
             if (!debugMode)
                 _tempObj.hideFlags = HideFlags.HideAndDontSave;
 
             _tempObj.transform.parent = this.transform;
-            _tempObj.transform.position = vertecs; /*new Vector3(
-                  transform.lossyScale.x * (transform.position.x + vertecs.x)
-                , transform.lossyScale.y * (transform.position.y + vertecs.y)
-                , transform.lossyScale.z * (transform.position.z + vertecs.z)
-            );*/
+            _tempObj.transform.position = vertecs; 
+
             var sphereColider = _tempObj.AddComponent<SphereCollider>() as SphereCollider;
             sphereColider.radius = collissionSurfaceOffset;
             
@@ -230,19 +223,6 @@ public class SoftbodyGenerator : MonoBehaviour
             thisBodyJoint.swingLimitSpring = springlimit;
             thisBodyJoint.twistLimitSpring = springlimit;
 
-           /* thisBodyJoint.enableProjection = true;
-            thisBodyJoint.projectionAngle = 45 ;
-            thisBodyJoint.projectionDistance = distanceBetween;
-            */
-
-
-            /* thisBodyJoint.spring = softness;
-             thisBodyJoint.damper = damp;
-             thisBodyJoint.autoConfigureConnectedAnchor = false;
-             thisBodyJoint.connectedAnchor = Vector3.zero;
-             thisBodyJoint.anchor = Vector3.zero;
-             thisBodyJoint.minDistance = distanceBetween;
-             thisBodyJoint.maxDistance = distanceBetween;*/
             if (!runOptimizedVersion)
                 thisBodyJoint.enableCollision = true;
            
@@ -259,13 +239,7 @@ public class SoftbodyGenerator : MonoBehaviour
             );
             
             destinationBodyJoint.connectedBody = centerOfMasObj.GetComponent<Rigidbody>();
-            /*destinationBodyJoint.spring = softness; //*5;
-            destinationBodyJoint.damper = damp; //* 5;
-            destinationBodyJoint.autoConfigureConnectedAnchor = false;
-            destinationBodyJoint.connectedAnchor = Vector3.zero;
-            destinationBodyJoint.anchor = Vector3.zero;
-            destinationBodyJoint.minDistance = distanceToCenterOfmass;
-            destinationBodyJoint.maxDistance = distanceToCenterOfmass;*/
+          
             destinationBodyJoint.massScale = 0.001f;
             destinationBodyJoint.connectedMassScale = 0.001f;
             if (!runOptimizedVersion)
