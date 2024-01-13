@@ -237,15 +237,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0c94ea3a1b6c9444841d7b0af4c0aed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layer:
-    serializedVersion: 2
-    m_Bits: 0
   runOptimizedVersion: 0
   collissionSurfaceOffset: 0.1
   softness: 0.8
   damp: 0.2
   mass: 1
-  gravity: 7
   debugMode: 0
   physicsRoughness: 0
 --- !u!1 &435069491
@@ -509,7 +505,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705507993}
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 3.4888308, y: 2.953384, z: -2.298803}
+  m_LocalPosition: {x: 3.4888308, y: 10.6, z: -2.298803}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -610,15 +606,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0c94ea3a1b6c9444841d7b0af4c0aed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layer:
-    serializedVersion: 2
-    m_Bits: 0
   runOptimizedVersion: 1
   collissionSurfaceOffset: 0.1
   softness: 1000
   damp: 100
   mass: 1
-  gravity: 7
   debugMode: 0
   physicsRoughness: 0
 --- !u!1 &963194225
@@ -698,7 +690,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.27360678, y: -0.34162238, z: 0.10468256, w: 0.8930146}
-  m_LocalPosition: {x: 4.981703, y: 4.72, z: -4.36}
+  m_LocalPosition: {x: 4.981703, y: 7.25, z: -4.36}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -799,15 +791,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0c94ea3a1b6c9444841d7b0af4c0aed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layer:
-    serializedVersion: 2
-    m_Bits: 0
   runOptimizedVersion: 0
   collissionSurfaceOffset: 0.1
   softness: 0.8
   damp: 0.2
   mass: 1
-  gravity: 7
   debugMode: 0
   physicsRoughness: 0
 --- !u!1 &1206348761
@@ -1074,15 +1062,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0c94ea3a1b6c9444841d7b0af4c0aed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layer:
-    serializedVersion: 2
-    m_Bits: 0
   runOptimizedVersion: 0
   collissionSurfaceOffset: 0.1
   softness: 1.5
   damp: 0.4
   mass: 1
-  gravity: 7
   debugMode: 0
   physicsRoughness: 0
 --- !u!23 &1756869007
@@ -1441,14 +1425,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0c94ea3a1b6c9444841d7b0af4c0aed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layer:
-    serializedVersion: 2
-    m_Bits: 0
   runOptimizedVersion: 0
   collissionSurfaceOffset: 0.05
   softness: 0.3
   damp: 0.05
   mass: 0.1
-  gravity: 7
   debugMode: 0
   physicsRoughness: 5
