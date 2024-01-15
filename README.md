@@ -4,9 +4,10 @@
 
 
 <br>
+<div style="display:flex;justify-content:space_between">
 <img src="https://github.com/ehsanwwe/Unity-SoftBody-physics/blob/main/softbody3.gif?raw=true" height="300" alt="unity softbody">
 <img src="https://github.com/ehsanwwe/Unity-SoftBody-physics/blob/main/softbody2.gif?raw=true" height="300" alt="unity softbody">
-
+</div>
 <br>
 <h2>how to use</h2>
 Add <b>SoftBodyGenerator.cs</b> script to your object
