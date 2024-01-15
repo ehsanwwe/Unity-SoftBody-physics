@@ -243,7 +243,6 @@ MonoBehaviour:
   damp: 0.2
   mass: 1
   debugMode: 0
-  physicsRoughness: 0
 --- !u!1 &435069491
 GameObject:
   m_ObjectHideFlags: 0
@@ -606,13 +605,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0c94ea3a1b6c9444841d7b0af4c0aed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runOptimizedVersion: 1
+  runOptimizedVersion: 0
   collissionSurfaceOffset: 0.1
   softness: 1000
   damp: 100
   mass: 1
   debugMode: 0
-  physicsRoughness: 0
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -796,8 +794,7 @@ MonoBehaviour:
   softness: 0.8
   damp: 0.2
   mass: 1
-  debugMode: 0
-  physicsRoughness: 0
+  debugMode: 1
 --- !u!1 &1206348761
 GameObject:
   m_ObjectHideFlags: 0
@@ -1068,7 +1065,6 @@ MonoBehaviour:
   damp: 0.4
   mass: 1
   debugMode: 0
-  physicsRoughness: 0
 --- !u!23 &1756869007
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1431,4 +1427,3 @@ MonoBehaviour:
   damp: 0.05
   mass: 0.1
   debugMode: 0
-  physicsRoughness: 5
