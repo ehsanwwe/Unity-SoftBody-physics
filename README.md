@@ -1,7 +1,6 @@
 <meta name="google-site-verification" content="-1jiJZ-TUx9L9zO3uSK3lp_G1AtSwhuGexR002ZBfGY" />
 <h1>Unity SoftBody physics</h1>
-<h3>Add a realestic MeshBased softbody physics feature to unity by adding one script</h3>
-
+Add a realestic MeshBased softbody physics feature to unity by adding one script
 
 <br>
 <div style="display:flex;justify-content:space_between">
@@ -16,8 +15,10 @@ and enjoy
 
 
 <h2>To do </h2>
-#add seperated physics For Fabric and Jelly mode
-<br>
 ✔️  # Add a center structure to create a jelly mode in unity softbody physics
 <br>
-✔️ # Add bake Button in editor to store mesh data into a temp folder under <b>streamingasset</b> to solving <b>"reCreating mesh in each of plays"</b>
+📝 # Add bake Button in editor to store mesh data into a temp folder under <b>streamingasset</b> to solving <b>"reCreating mesh in each of plays"</b>
+<br>
+📝 #add seperated physics For Fabric and Jelly mode
+<br>
+📝 #add convexhull system to optimize Softbody system
