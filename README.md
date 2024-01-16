@@ -10,7 +10,7 @@
 
 <br>
 <div>
-  <h2 align="center">how to use</h2>
+  <h2 align="left">how to use</h2>
   <p>
     Add <b>SoftBodyGenerator.cs</b> script to your object
     you can get UnityPackage file from this link
