@@ -4,9 +4,9 @@
 
 <br>
 <div>
-  <img src="https://github.com/ehsanwwe/Unity-SoftBody-physics/blob/main/softbody3.gif?raw=true" width="30%" alt="unity softbody jelly" align="left">
-  <img src="https://github.com/ehsanwwe/Unity-SoftBody-physics/blob/main/softbody2.gif?raw=true" width="30%" alt="unity softbody fabric"  align="center">
-  <img src="https://github.com/ehsanwwe/Unity-SoftBody-physics/blob/main/softbody4.gif?raw=true" width="30%" alt="unity softbody fabric" align="right">
+  <img src="https://github.com/ehsanwwe/Unity-SoftBody-physics/blob/main/softbody3.gif?raw=true" width="33%" alt="unity softbody jelly" align="left">
+  <img src="https://github.com/ehsanwwe/Unity-SoftBody-physics/blob/main/softbody2.gif?raw=true" width="33%" alt="unity softbody fabric"  align="center">
+  <img src="https://github.com/ehsanwwe/Unity-SoftBody-physics/blob/main/softbody4.gif?raw=true" width="33%" alt="unity softbody fabric" align="right">
 </div>
 
 <br>
