@@ -12,6 +12,8 @@ public class SoftbodyGenerator : MonoBehaviour
     private List<Vector3> writableVerticesConvaxed;//{ get; set; }
     private List<Vector3> writableNormals { get; set; }
     private List<Vector3> writableNormalsConvaxed;//{ get; set; }
+
+    private List<SphereCollider> sphereColliders = new List<SphereCollider>();
     private int[] writableTris { get; set; }
     private List<int> writableTrisConvaxed;// { get; set; }
     private Mesh writableMesh;
@@ -31,8 +33,8 @@ public class SoftbodyGenerator : MonoBehaviour
         {
             _collissionSurfaceOffset = value;
             if (phyisicedVertexes != null)
-                foreach (var gObject in phyisicedVertexes)
-                    gObject.GetComponent<SphereCollider>().radius = _collissionSurfaceOffset;
+                foreach (var sCollider in sphereColliders)
+                    sCollider.radius = _collissionSurfaceOffset;
         }
     }
 
@@ -148,6 +150,7 @@ public class SoftbodyGenerator : MonoBehaviour
     public GameObject centerOfMasObj = null;
     private void Awake()
     {
+        
        
         writableVertices = new List<Vector3>();
         writableVerticesConvaxed = new List<Vector3>();
@@ -216,21 +219,27 @@ public class SoftbodyGenerator : MonoBehaviour
         {
             var _tempObj = new GameObject("Point "+ _optimizedVertex.IndexOf(vertecs));
 
-
             if (!debugMode)
                 _tempObj.hideFlags = HideFlags.HideAndDontSave;
 
             _tempObj.transform.parent = this.transform;
             _tempObj.transform.position = vertecs; 
 
+
+            // add collider to each of vertex ( sphere collider )
             var sphereColider = _tempObj.AddComponent<SphereCollider>() as SphereCollider;
             sphereColider.radius = collissionSurfaceOffset;
-            
+            // add current collider to Collider list ;
+            sphereColliders.Add(sphereColider);
 
+
+            // add rigidBody to each of vertex
             var _tempRigidBody = _tempObj.AddComponent<Rigidbody>();
             _tempRigidBody.mass = mass / _optimizedVertex.Count;
             _tempRigidBody.drag = physicsRoughness;
-            //_tempRigidBody.useGravity = false;
+            
+
+            
             
             
             _tempObj.AddComponent<DebugColorGameObject>().Color = Random.ColorHSV(); 
@@ -255,20 +264,32 @@ public class SoftbodyGenerator : MonoBehaviour
         // add center of mass vertex to OptimizedVertex list
         {
             var _tempObj = new GameObject("centerOfMass");
+
             if (!debugMode)
                 _tempObj.hideFlags = HideFlags.HideAndDontSave;
             _tempObj.transform.parent = this.transform;
             _tempObj.transform.position = centerOfMass;
 
+            // add collider to center of mass as a sphere collider
             var sphereColider = _tempObj.AddComponent<SphereCollider>() as SphereCollider;
             sphereColider.radius = collissionSurfaceOffset;
+            // add current collider to Collider list ;
+            sphereColliders.Add(sphereColider);
 
+            // add rigidBody to center of mass as a sphere collider
             var _tempRigidBody = _tempObj.AddComponent<Rigidbody>();
-            //_tempRigidBody.useGravity = false;
+            
             centerOfMasObj = _tempObj;            
         }
 
-
+        // IGNORE COLLISTION BETWEEN ALL OF THE VERTEXES AND CENTER OFF MASS
+        foreach (var collider1 in sphereColliders)
+        {
+            foreach (var collider2 in sphereColliders)
+            {
+                Physics.IgnoreCollision(collider1, collider2, true);
+            }
+        }
 
         // extract Lines from quad of mesh
         List<Vector2Int> tempListOfSprings = new List<Vector2Int>();
@@ -436,12 +457,16 @@ public class LookAtPointEditor : Editor
         
         softbody.debugMode = EditorGUILayout.Toggle("#Debug mod", softbody.debugMode);
         EditorGUILayout.Space();
+
+        string[] options = new string[] { "  version 1", "  version 2" };
         
+
         softbody.gravity = EditorGUILayout.Toggle("Gravity", softbody.gravity);
         softbody.mass = EditorGUILayout.FloatField("Mass(KG)", softbody.mass);
         softbody.physicsRoughness = EditorGUILayout.FloatField("Drag (roughness)", softbody.physicsRoughness);
         softbody.softness = EditorGUILayout.FloatField("Softbody hardness", softbody.softness);
         softbody.damp = EditorGUILayout.FloatField("Softbody damper", softbody.damp);
+        softbody.collissionSurfaceOffset = EditorGUILayout.FloatField("Softbody Offset", softbody.collissionSurfaceOffset);
         
     }
 }

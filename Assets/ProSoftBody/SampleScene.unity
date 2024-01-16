@@ -238,11 +238,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runOptimizedVersion: 0
-  collissionSurfaceOffset: 0.1
-  softness: 0.8
-  damp: 0.2
-  mass: 1
-  debugMode: 0
+  _collissionSurfaceOffset: 0.1
+  _softness: 1
+  _damp: 0.2
+  _mass: 1
+  centerOfMasObj: {fileID: 0}
 --- !u!1 &435069491
 GameObject:
   m_ObjectHideFlags: 0
@@ -606,11 +606,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runOptimizedVersion: 0
-  collissionSurfaceOffset: 0.1
-  softness: 1000
-  damp: 100
-  mass: 1
-  debugMode: 0
+  _collissionSurfaceOffset: 0.1
+  _softness: 1
+  _damp: 0.2
+  _mass: 1
+  centerOfMasObj: {fileID: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -790,11 +790,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runOptimizedVersion: 0
-  collissionSurfaceOffset: 0.1
-  softness: 0.8
-  damp: 0.2
-  mass: 1
-  debugMode: 1
+  _collissionSurfaceOffset: 0.1
+  _softness: 1
+  _damp: 0.2
+  _mass: 1
+  centerOfMasObj: {fileID: 0}
 --- !u!1 &1206348761
 GameObject:
   m_ObjectHideFlags: 0
@@ -1060,11 +1060,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runOptimizedVersion: 0
-  collissionSurfaceOffset: 0.1
-  softness: 1.5
-  damp: 0.4
-  mass: 1
-  debugMode: 0
+  _collissionSurfaceOffset: 0.1
+  _softness: 1
+  _damp: 0.2
+  _mass: 1
+  centerOfMasObj: {fileID: 0}
 --- !u!23 &1756869007
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1343,7 +1343,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2101825148
 Transform:
   m_ObjectHideFlags: 0
@@ -1422,8 +1422,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runOptimizedVersion: 0
-  collissionSurfaceOffset: 0.05
-  softness: 0.3
-  damp: 0.05
-  mass: 0.1
-  debugMode: 0
+  _collissionSurfaceOffset: 0.1
+  _softness: 1
+  _damp: 0.2
+  _mass: 1
+  centerOfMasObj: {fileID: 0}
