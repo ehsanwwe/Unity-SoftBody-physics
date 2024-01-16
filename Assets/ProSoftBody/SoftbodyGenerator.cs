@@ -291,7 +291,7 @@ public class SoftbodyGenerator : MonoBehaviour
             }
         }
 
-        // extract Lines from quad of mesh
+        // Extract Lines from quad of mesh
         List<Vector2Int> tempListOfSprings = new List<Vector2Int>();
         bool isFirstTrisOfQuad = true;
         for (int i=0;i<writableTris.Length;i+=3)
