@@ -10,15 +10,20 @@ Add a realestic MeshBased softbody physics feature to unity by adding one script
 <br>
 <h2>how to use</h2>
 Add <b>SoftBodyGenerator.cs</b> script to your object
+you can get UnityPackage file from this link
+<a href="https://github.com/ehsanwwe/Unity-SoftBody-physics/releases">
+  https://github.com/ehsanwwe/Unity-SoftBody-physics/releases
+</a>
 <br>
 and enjoy
 
 
-<h2>To do </h2>
+<h2>To do list</h2>
 ✔️  # Add a center structure to create a jelly mode in unity softbody physics
-<br>
-📝 # Add bake Button in editor to store mesh data into a temp folder under <b>streamingasset</b> to solving <b>"reCreating mesh in each of plays"</b>
 <br>
 📝 #add seperated physics For Fabric and Jelly mode
 <br>
 📝 #add convexhull system to optimize Softbody system
+<br>
+📝 # Add bake Button in editor to store mesh data at template folder into <b>streamingasset</b> folder to solve <b>"reGenerate mesh data of softbody at beginning of play"</b>
+<br>
