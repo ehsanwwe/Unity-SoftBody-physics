@@ -5,8 +5,8 @@ Add a realestic MeshBased softbody physics feature to unity by adding one script
 
 <br>
 <p align="center">
-  <img src="https://github.com/ehsanwwe/Unity-SoftBody-physics/blob/main/softbody3.gif?raw=true" height="300" alt="unity softbody" align="left">
-  <img src="https://github.com/ehsanwwe/Unity-SoftBody-physics/blob/main/softbody2.gif?raw=true" height="300" alt="unity softbody" align="right">
+  <img src="https://github.com/ehsanwwe/Unity-SoftBody-physics/blob/main/softbody3.gif?raw=true" height="200" alt="unity softbody" align="left">
+  <img src="https://github.com/ehsanwwe/Unity-SoftBody-physics/blob/main/softbody2.gif?raw=true" height="200" alt="unity softbody" align="right">
 </p>
 <br>
 <h2>how to use</h2>
