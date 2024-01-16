@@ -2,15 +2,18 @@
 <h1>Unity SoftBody physics</h1>
 Add a realestic MeshBased softbody physics feature to unity by adding one script
 
+
 <br>
-<div style="display:flex;justify-content:space_between">
-<img src="https://github.com/ehsanwwe/Unity-SoftBody-physics/blob/main/softbody3.gif?raw=true" height="300" alt="unity softbody">
-<img src="https://github.com/ehsanwwe/Unity-SoftBody-physics/blob/main/softbody2.gif?raw=true" height="300" alt="unity softbody">
-</div>
+<p align="center">
+  <img src="https://github.com/ehsanwwe/Unity-SoftBody-physics/blob/main/softbody3.gif?raw=true" height="300" alt="unity softbody" align="left">
+  <img src="https://github.com/ehsanwwe/Unity-SoftBody-physics/blob/main/softbody2.gif?raw=true" height="300" alt="unity softbody" align="right">
+</p>
 <br>
 <h2>how to use</h2>
 Add <b>SoftBodyGenerator.cs</b> script to your object
 you can get UnityPackage file from this link
+
+<br>
 <a href="https://github.com/ehsanwwe/Unity-SoftBody-physics/releases">
   https://github.com/ehsanwwe/Unity-SoftBody-physics/releases
 </a>
