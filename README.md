@@ -12,13 +12,14 @@
 <div>
   <h2 align="left">how to use</h2>
   <p>
-    Add <b>SoftBodyGenerator.cs</b> script to your object
-    you can get UnityPackage file from this link
+    Add <b>SoftBodyGenerator.cs</b> script to your object    
+    <br>
+    you can get UnityPackage file from bottom link
+    <br>
+    <a href="https://github.com/ehsanwwe/Unity-SoftBody-physics/releases">
+      https://github.com/ehsanwwe/Unity-SoftBody-physics/releases
+    </a>    
   </p>
-  <br>
-  <a href="https://github.com/ehsanwwe/Unity-SoftBody-physics/releases">
-    https://github.com/ehsanwwe/Unity-SoftBody-physics/releases
-  </a>
   <br>
   <p>
     and enjoy
