@@ -35,5 +35,5 @@
 <br>
 📝 #add convexhull system to optimize Softbody system
 <br>
-📝 # Add bake Button in editor to store mesh data at template folder into <b>streamingasset</b> folder to solve <b>"reGenerate mesh data of softbody at beginning of play"</b>
+📝 # Add bake Button in editor to store mesh data at template folder into <b>streamingasset</b> folder to solve <b>"reGenerate mesh data of softbody at beginning of each plays"</b>
 <br>
