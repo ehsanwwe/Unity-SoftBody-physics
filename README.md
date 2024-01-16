@@ -9,17 +9,21 @@
 </div>
 
 <br>
-<h2 align="center">how to use</h2>
-Add <b>SoftBodyGenerator.cs</b> script to your object
-you can get UnityPackage file from this link
-
-<br>
-<a href="https://github.com/ehsanwwe/Unity-SoftBody-physics/releases">
-  https://github.com/ehsanwwe/Unity-SoftBody-physics/releases
-</a>
-<br>
-and enjoy
-
+<div>
+  <h2 align="center">how to use</h2>
+  <p>
+    Add <b>SoftBodyGenerator.cs</b> script to your object
+    you can get UnityPackage file from this link
+  </p>
+  <br>
+  <a href="https://github.com/ehsanwwe/Unity-SoftBody-physics/releases">
+    https://github.com/ehsanwwe/Unity-SoftBody-physics/releases
+  </a>
+  <br>
+  <p>
+    and enjoy
+  </p>
+</div>
 
 <h2>To do list</h2>
 ✔️  # Add a center structure to create a jelly mode in unity softbody physics
