@@ -1,6 +1,7 @@
 <meta name="google-site-verification" content="-1jiJZ-TUx9L9zO3uSK3lp_G1AtSwhuGexR002ZBfGY" />
 <h1>Unity SoftBody physics</h1>
-<p>Add a realestic MeshBased softbody physics feature to unity by adding one script</p>
+<h3>clean and optimized Softbody physic engine</h3>
+<p>Add a realestic MeshBased softbody physics feature for Unity3D by adding one script</p>
 
 <br>
 <div>
