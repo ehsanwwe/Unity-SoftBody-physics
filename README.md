@@ -47,7 +47,9 @@ By donating, you are not only helping me, but also contributing to the wider ope
 Your generosity allows us to keep my project free and accessible to everyone, regardless of their financial situation.
 <br>
 <b>Donation link:</b>
+<br>
 <a href="https://www.donationalerts.com/r/ehsan_hightech">
   https://www.donationalerts.com/r/ehsan_hightech
 </a>
+<br>
 Thank you for your support!
