@@ -38,3 +38,16 @@
 <br>
 📝 # Add bake Button in editor to store mesh data at template folder into <b>streamingasset</b> folder to solve <b>"reGenerate mesh data of softbody at beginning of each plays"</b>
 <br>
+
+<h2>
+  support me 
+</h2>
+By donating, you are not only helping me, but also contributing to the wider open-source community.
+<br>
+Your generosity allows us to keep my project free and accessible to everyone, regardless of their financial situation.
+<br>
+<b>Donation link:</b>
+<a href="https://www.donationalerts.com/r/ehsan_hightech">
+  https://www.donationalerts.com/r/ehsan_hightech
+</a>
+Thank you for your support!
